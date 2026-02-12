@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Meet ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    background: url("https://images.unsplash.com/photo-1518199266791-5375a83190b7") no-repeat center center/cover;
+    backdrop-filter: blur(6px);
+    color: #fff;
+    overflow-x: hidden;
+}
+
+.overlay {
+    background: rgba(0,0,0,0.5);
+    min-height: 100vh;
+    padding-bottom: 50px;
+}
+
+h1 { font-size: 42px; margin-top: 60px; }
+h2 { font-weight: normal; }
+
+.rose { font-size: 55px; }
+
+.anniversary {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #ffd1dc;
+}
+
+.box { font-size: 22px; margin: 10px; }
+
+button {
+    padding: 12px 25px;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+#submitBtn { background-color: #ff4081; color: white; }
+
+#noBtn {
+    background-color: grey;
+    color: white;
+    position: absolute;
+}
+
+#countdown { font-size: 22px; margin-top: 20px; }
+
+#finalMessage {
+    display: none;
+    margin-top: 30px;
+    font-size: 20px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.signature {
+    margin-top: 20px;
+    font-style: italic;
+    font-size: 22px;
+    color: #ffd1dc;
+}
+
+/* Hearts */
+.heart {
+    position: absolute;
+    animation: float 6s linear infinite;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); opacity: 1; }
+    to { transform: translateY(-10vh); opacity: 0; }
+}
+
+/* Slideshow */
+#slideshow {
+    display: none;
+    margin-top: 30px;
+}
+
+#slideshow h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+#slideshow img {
+    width: 260px;
+    height: 340px;
+    object-fit: cover;
+    border-radius: 20px;
+    border: 5px solid pink;
+    box-shadow: 0 0 25px rgba(255,105,180,0.7);
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+
+/* Fireworks */
+.firework {
+    position: absolute;
+    font-size: 30px;
+    animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+    from { transform: scale(0); opacity: 1; }
+    to { transform: scale(3); opacity: 0; }
+}
+</style>
+</head>
+
+<body onclick="playMusic()">
+<div class="overlay">
+
+<div class="rose">🌹</div>
+<h1 id="typing"></h1>
+<h2>Will You Be My Valentine? 💖</h2>
+<div class="anniversary">Since 23/09/23 ❤️</div>
+
+<div class="box">
+<input type="checkbox" id="yes1"> Yes 💘
+</div>
+<div class="box">
+<input type="checkbox" id="yes2"> Yes 😍
+</div>
+
+<button id="submitBtn" onclick="startCountdown()">Submit</button>
+<button id="noBtn" onmouseover="moveNo()">No 😜</button>
+
+<div id="countdown"></div>
+
+<div id="slideshow">
+<h3>Our Memories ❤️</h3>
+<img id="slideImg" src="https://picsum.photos/300/400?random=1">
+</div>
+
+<div id="finalMessage">
+<p>
+The love I always wanted found me and yes it’s you,<br><br>
+I can’t thank God enough to have you in my life and to shower u with all the love I can.<br><br>
+I love you my baby, my love, my everything ❤️
+</p>
+<div class="signature">yours aays 💕</div>
+</div>
+
+<audio id="bgMusic" loop>
+<source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mp3">
+</audio>
+
+</div>
+
+<script>
+
+/* Typing */
+var text = "Hey Meet ❤️";
+var i = 0;
+function typeWriter() {
+    if (i < text.length) {
+        document.getElementById("typing").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 100);
+    }
+}
+typeWriter();
+
+/* No Button Runs */
+function moveNo() {
+    var btn = document.getElementById("noBtn");
+    btn.style.left = Math.random() * window.innerWidth + "px";
+    btn.style.top = Math.random() * window.innerHeight + "px";
+}
+
+/* Countdown */
+function startCountdown() {
+    if (!yes1.checked && !yes2.checked) {
+        alert("Meet… only Yes is allowed 😌❤️");
+        return;
+    }
+
+    var timeLeft = 5;
+    countdown.innerHTML = "Wait for it... " + timeLeft;
+
+    var timer = setInterval(function() {
+        timeLeft--;
+        countdown.innerHTML = "Wait for it... " + timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            countdown.innerHTML = "Forever starts now ❤️";
+            showFinal();
+        }
+    }, 1000);
+}
+
+/* Show Final */
+function showFinal() {
+    document.getElementById("finalMessage").style.display = "block";
+    document.getElementById("slideshow").style.display = "block";
+    startFireworks();
+    startSlideshow();
+}
+
+/* Fireworks */
+function startFireworks() {
+    for (let i = 0; i < 25; i++) {
+        let fw = document.createElement("div");
+        fw.className = "firework";
+        fw.innerHTML = "✨";
+        fw.style.left = Math.random() * window.innerWidth + "px";
+        fw.style.top = Math.random() * window.innerHeight + "px";
+        document.body.appendChild(fw);
+        setTimeout(() => fw.remove(), 1000);
+    }
+}
+
+/* Floating Hearts */
+function createHeart() {
+    var heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 400);
+
+/* Smooth Slideshow */
+var images = [
+    "https://picsum.photos/300/400?random=1",
+    "https://picsum.photos/300/400?random=2",
+    "https://picsum.photos/300/400?random=3"
+];
+
+var slideIndex = 0;
+function startSlideshow() {
+    setInterval(function() {
+        var img = document.getElementById("slideImg");
+        img.style.opacity = 0;
+        setTimeout(function() {
+            slideIndex = (slideIndex + 1) % images.length;
+            img.src = images[slideIndex];
+            img.style.opacity = 1;
+        }, 500);
+    }, 2500);
+}
+
+/* Music */
+function playMusic() {
+    document.getElementById("bgMusic").play();
+}
+
+</script>
+</body>
+</html>
